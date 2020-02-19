@@ -13,10 +13,9 @@ remote:
 	$(call run_remote,bash)
 
 .PHONY: kafka
-kafka:
-	$(if $s,,$(error Specify sub-command with `s` (e.g. s=topics)))
-	$(if $p,,$(info [INFO] Use `p` to pass parameters if necessary (e.g. p=--version)))
-	$(call run_remote,$$KAFKA_HOME/bin/kafka-$s.sh $p)
+kafka.%:
+	$(if $(params),,$(info [INFO] Use `params` to pass parameters if necessary (e.g. params=--version)))
+	$(call run_remote,$$KAFKA_HOME/bin/kafka-$*.sh $(params))
 
 .PHONY: kafka-up
 kafka-up: $(kafka_dir)

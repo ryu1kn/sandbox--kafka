@@ -12,7 +12,7 @@ make kafka-up
 Use `kafka-topics` command
 
 ```sh
-make kafka s=topics p=--help
+make kafka.topics params=--help
 ```
 
 Jump to kafka instance
