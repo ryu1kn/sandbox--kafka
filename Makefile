@@ -12,18 +12,19 @@ run-remote:
 remote:
 	$(call run_remote,bash)
 
-.PHONY: kafka
+.PHONY: kafka.%
 kafka.%:
 	$(if $(params),,$(info [INFO] Use `params` to pass parameters if necessary (e.g. params=--version)))
 	$(call run_remote,$$KAFKA_HOME/bin/kafka-$*.sh $(params))
 
 .PHONY: kafka-up
 kafka-up: $(kafka_dir)
-	cd $< && docker-compose up -d
+	cd $< && docker-compose up
 
 .PHONY: kafka-down
 kafka-down: $(kafka_dir)
-	cd $< && docker-compose stop
+	cd $< && docker-compose down
 
 $(kafka_dir):
 	git clone https://github.com/wurstmeister/kafka-docker $@
+	sed -i.bkp 's/\bKAFKA_ADVERTISED_HOST_NAME:.*/HOSTNAME_COMMAND: "route -n | awk '"'"'\/UG[ \\t]\/ {print $$$$2}'"'"'"/' $(kafka_dir)/docker-compose.yml
