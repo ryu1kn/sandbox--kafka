@@ -12,17 +12,17 @@ run-remote:
 remote:
 	$(call run_remote,bash)
 
-.PHONY: kafka.%
-kafka.%:
+.PHONY: kafka-% connect-% zookeeper-%
+kafka-% connect-% zookeeper-%:
 	$(if $(params),,$(info [INFO] Use `params` to pass parameters if necessary (e.g. params=--version)))
-	$(call run_remote,$$KAFKA_HOME/bin/kafka-$*.sh $(params))
+	$(call run_remote,$$KAFKA_HOME/bin/$@.sh $(params))
 
-.PHONY: kafka-up
-kafka-up: $(kafka_dir)
+.PHONY: kafka.up
+kafka.up: $(kafka_dir)
 	cd $< && docker-compose up
 
-.PHONY: kafka-down
-kafka-down: $(kafka_dir)
+.PHONY: kafka.down
+kafka.down: $(kafka_dir)
 	cd $< && docker-compose down
 
 $(kafka_dir):

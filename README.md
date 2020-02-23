@@ -6,7 +6,7 @@
 Bring up Kafka with docker-compose
 
 ```sh
-make kafka-up
+make kafka.up
 ```
 
 Demo script. Create a topic, publish messages and receive them.
@@ -18,7 +18,7 @@ Demo script. Create a topic, publish messages and receive them.
 Use `kafka-topics` command
 
 ```sh
-make kafka.topics params=--help
+make kafka-topics params=--help
 ```
 
 Jump to kafka instance
